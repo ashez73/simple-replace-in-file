@@ -1,0 +1,14 @@
+{
+  "name": "filescrap",
+  "version": "1.0.0",
+  "description": "",
+  "main": "changeme.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pawel Plaszczyk",
+  "license": "ISC",
+  "dependencies": {
+    "readline": "^1.3.0"
+  }
+}
