@@ -21,6 +21,7 @@ const userInput = new Promise(resolve => {
     });
 });
 userInput.then(answer => {
+    //TODO: change to sync version for sake of consistency 
     let fileArray = (fs.readdirSync('../files'));
     let newString;
     let myString;
@@ -28,8 +29,8 @@ userInput.then(answer => {
 
     //main loop: read data/replace data/write data
 
-    for (let file = 0; file < fileArray.length; file++) {
-        let myFile = `../files/${fileArray[file]}`;
+    for (let file of fileArray) {
+        let myFile = `../files/${file}`;
         myString = new Promise(resolve => {
             fs.readFile(myFile, 'utf-8', (err, data) => {
                 if (err) throw err;
