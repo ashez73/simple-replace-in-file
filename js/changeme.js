@@ -5,7 +5,8 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 RegExp.escape = string => string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-var answer = {};
+let answer = {};
+let strings = {};
 
 //get user input
 
@@ -32,14 +33,16 @@ userInput.then(answer => {
         myString = new Promise(resolve => {
             fs.readFile(myFile, 'utf-8', (err, data) => {
                 if (err) throw err;
-                newString = data.replace(answer.one, answer.two);
-                resolve(newString);
+                strings.old =data;
+                strings.new = data.replace(answer.one, answer.two);
+                resolve(strings);
             });
         })
-        myString.then(newString => {
-            fs.writeFile(myFile, newString, (err) => {
+        myString.then(strings => {
+            if (strings.old != strings.new) {
+            fs.writeFile(myFile, strings.new, (err) => {
                 if (err) throw err;
                 console.log(`${myFile} was updated!`);
-            })});
+            })}});
     }
 });
