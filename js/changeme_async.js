@@ -8,14 +8,13 @@ RegExp.escape = string => string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 let answer = {};
 let strings = {};
 
-async function simpleReplace() {
+async function simpleReplace () {
+  // get user input
 
-  //get user input
-
-  function userInput() {
+  function userInput () {
     return new Promise(resolve => {
       rl.question('What phrase should I look for? ', args => {
-        answer.one = new RegExp(RegExp.escape(args), "g");
+        answer.one = new RegExp(RegExp.escape(args), 'g');
         rl.question('Phrase to replace with? : ', args => {
           answer.two = args;
           rl.close();
@@ -25,18 +24,19 @@ async function simpleReplace() {
     });
   }
 
-  function readDir() {
+  function readDir () {
     return new Promise(resolve => {
       fs.readdir('../files', (err, list) => {
-        if (err) { throw err };
-        //console.log(list)
+        if (err) { throw err; }
         resolve(list);
       });
     });
   };
+
   await userInput();
   let list = await readDir();
-  async function updateFiles() {
+  async function updateFiles () {
+    let myString;
     for (let file of list) {
       let myFile = `../files/${file}`;
       myString = new Promise(resolve => {
@@ -46,17 +46,16 @@ async function simpleReplace() {
           strings.new = data.replace(answer.one, answer.two);
           resolve(strings);
         });
-      })
+      });
       strings = await myString;
-      if (strings.old != strings.new) {
+      if (strings.old !== strings.new) {
         fs.writeFile(myFile, strings.new, (err) => {
           if (err) throw err;
           console.log(`${myFile} was updated!`);
-        })
+        });
       }
     }
   }
   updateFiles();
-
 }
 simpleReplace();
